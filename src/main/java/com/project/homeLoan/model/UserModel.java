@@ -31,11 +31,34 @@ public class UserModel {
 	@Column(name = "role")
 	private boolean role;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="accountNo",referencedColumnName ="accountNo" )
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public boolean isRole() {
+		return role;
+	}
+
+	public void setRole(boolean role) {
+		this.role = role;
+	}
+
+	@OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
 	private AccountModel account;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="Kyc_details", referencedColumnName = "mobile")
+
+	@OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
 	private KycModel kyc;
 }

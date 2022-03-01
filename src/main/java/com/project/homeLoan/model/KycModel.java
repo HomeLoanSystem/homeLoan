@@ -1,8 +1,10 @@
 package com.project.homeLoan.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
@@ -26,6 +28,9 @@ public class KycModel {
 	@Column(name = "aadhar")
 	private String aadhar;
 	
-	@OneToOne(mappedBy = "kyc")
+	
+	
+	@OneToOne
+	@JoinColumn(name="userId", referencedColumnName = "id")
 	private UserModel user;
 }
