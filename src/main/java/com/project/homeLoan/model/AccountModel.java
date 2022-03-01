@@ -7,7 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -33,6 +35,10 @@ public class AccountModel {
 	
 	@Column(name = "ifsc")
 	private String ifsc;
+	
+	@OneToOne
+	@JoinColumn(name="userId",referencedColumnName ="id" )
+	private UserModel user;
 	
 	//in mappedBy use object name created in referncing table(loanModel.java ) 
 	@OneToMany(mappedBy = "account" ,cascade = CascadeType.ALL)

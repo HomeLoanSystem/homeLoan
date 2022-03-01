@@ -54,8 +54,8 @@ public class LoanModel {
 	@JoinColumn(name="account",referencedColumnName = "accountNo")
 	private AccountModel account;
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="emiID",referencedColumnName = "emiID")
-	private EMIModel emi;
 	
+	
+	@OneToOne(mappedBy = "loan",cascade = CascadeType.ALL)
+	private EMIModel emi;
 }

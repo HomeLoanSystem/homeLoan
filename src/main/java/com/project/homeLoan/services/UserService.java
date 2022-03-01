@@ -1,9 +1,12 @@
 package com.project.homeLoan.services;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+
 
 import com.project.homeLoan.dao.UserDaoInterface;
 import com.project.homeLoan.model.UserModel;
@@ -24,4 +27,9 @@ public class UserService {
 	{
 		return userDao.getById(id);
 	}
+
+	public String setUser(UserModel data) {
+		userDao.save(data);
+		return "data added successfully";
+	} 
 }
