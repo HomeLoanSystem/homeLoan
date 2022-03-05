@@ -9,6 +9,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "Kyc_details")
 public class KycModel {
@@ -25,12 +27,73 @@ public class KycModel {
 	@Pattern(regexp = "[a-z0-9]{5,10}", message = "Invalid pan number")
 	private String pan;
 	
+
 	@Column(name = "aadhar")
 	private String aadhar;
 	
 	
+	public long getMobile() {
+		return mobile;
+	}
+
+
+
+	public void setMobile(long mobile) {
+		this.mobile = mobile;
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+	public String getPan() {
+		return pan;
+	}
+
+
+
+	public void setPan(String pan) {
+		this.pan = pan;
+	}
+
+
+
+	public String getAadhar() {
+		return aadhar;
+	}
+
+
+
+	public void setAadhar(String aadhar) {
+		this.aadhar = aadhar;
+	}
+
+
+
+	@JsonBackReference
+	public UserModel getUser() {
+		return user;
+	}
+
+
+
+	public void setUser(UserModel user) {
+		this.user = user;
+	}
+
+	
 	
 	@OneToOne
-	@JoinColumn(name="userId", referencedColumnName = "id")
+	@JoinColumn(name="user_id")
 	private UserModel user;
 }

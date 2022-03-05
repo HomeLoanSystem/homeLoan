@@ -14,6 +14,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "Account")
 public class AccountModel {
@@ -68,11 +71,29 @@ public class AccountModel {
 	@Column(name = "ifsc")
 	private String ifsc;
 	
-	@OneToOne
-	@JoinColumn(name="userId",referencedColumnName ="id")
-	private UserModel user;
 	
+	@OneToOne
+	@JoinColumn(name="user_id")
+	private UserModel user;
+
+	public void setUser(UserModel user) {
+		this.user = user;
+	}
+
+	@JsonBackReference
+	public UserModel getUser() {
+		return user;
+	}
 	//in mappedBy use object name created in referncing table(loanModel.java ) 
-	@OneToMany(mappedBy = "account" ,cascade = CascadeType.ALL)
-	private List<LoanModel> loans; 
+	@OneToMany(mappedBy = "account")
+	private List<LoanModel> loans;
+
+	@JsonManagedReference
+	public List<LoanModel> getLoans() {
+		return loans;
+	}
+
+	public void setLoans(List<LoanModel> loans) {
+		this.loans = loans;
+	} 
 }
