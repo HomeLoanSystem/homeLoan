@@ -2,6 +2,8 @@ package com.project.homeLoan.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import com.project.homeLoan.dao.AccountDaoInterface;
 import com.project.homeLoan.model.AccountModel;
 
 @Service
+@Transactional
 public class AccountService {
 
 	@Autowired

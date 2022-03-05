@@ -31,6 +31,8 @@ public class AccountController {
 	public String setAcount(@RequestBody AccountModel data)
 	{
 		System.out.println(data.getAccountType()+" "+data.getBalance()+" "+data.getBranch());
+		System.out.println("User" + data.getUser());
+		
 		return accountService.setAccount(data);
 	}
 	
