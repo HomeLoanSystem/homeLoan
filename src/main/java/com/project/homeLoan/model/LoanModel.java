@@ -1,5 +1,9 @@
 package com.project.homeLoan.model;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +18,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GeneratorType;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 
 @Entity
 @Table(name = "Loan_details")
@@ -46,10 +53,35 @@ public class LoanModel {
 	@Column(name="loan_sanction_date", nullable = false)
 	private String loan_sanction_date;
 	
+	@Column(name="document",nullable=true)
+	private String document;
+	
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name= "status")
 	private Status status;
 	
+	public String getDocument() {
+		return document;
+	}
+
+
+
+	public void setDocument(String document) {
+		this.document = document;
+	}
+
+	
+	private final HashMap<String, MultipartFile> details= new HashMap<String,MultipartFile>();
+	
+	 @JsonAnySetter
+	 public void addDetail(String key, MultipartFile value) {
+	    this.details.put(key, value);
+	 }
+	 
+	 public HashMap<String, MultipartFile> getDetails() { return this.details; }
+
+
+
 	@ManyToOne
 	@JoinColumn(name="account",referencedColumnName = "accountNo")
 	private AccountModel account;

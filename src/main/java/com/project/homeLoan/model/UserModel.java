@@ -2,6 +2,7 @@ package com.project.homeLoan.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
+
 
 @Entity
 @Table(name = "User")
@@ -38,7 +41,7 @@ public class UserModel {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
+ 
 	public String getPassword() {
 		return password;
 	}

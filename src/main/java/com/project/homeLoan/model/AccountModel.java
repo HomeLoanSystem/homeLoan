@@ -18,6 +18,38 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "Account")
 public class AccountModel {
 
+	public String getBranch() {
+		return branch;
+	}
+
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+
+	public String getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+
+	public long getBalance() {
+		return balance;
+	}
+
+	public void setBalance(long balance) {
+		this.balance = balance;
+	}
+
+	public String getIfsc() {
+		return ifsc;
+	}
+
+	public void setIfsc(String ifsc) {
+		this.ifsc = ifsc;
+	}
+
 	@Id
 	@GenericGenerator(name="sequence_generator", strategy="com.project.homeLoan.generator.AccountNumberGenerator")
 	@GeneratedValue(generator = "sequence_generator")
@@ -37,7 +69,7 @@ public class AccountModel {
 	private String ifsc;
 	
 	@OneToOne
-	@JoinColumn(name="userId",referencedColumnName ="id" )
+	@JoinColumn(name="userId",referencedColumnName ="id")
 	private UserModel user;
 	
 	//in mappedBy use object name created in referncing table(loanModel.java ) 

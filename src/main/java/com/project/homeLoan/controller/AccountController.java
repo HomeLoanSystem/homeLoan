@@ -6,6 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.homeLoan.model.AccountModel;
@@ -24,10 +26,12 @@ public class AccountController {
 		return new ResponseEntity<>(accountService.getAccounts(),HttpStatus.OK);
 	}
 	
-	@PostMapping(value ="/accounts",produces =  MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity<Object> setAcount(AccountModel data)
+	@PostMapping(value ="/addAccount",produces = MediaType.APPLICATION_JSON_VALUE )
+	@ResponseBody
+	public String setAcount(@RequestBody AccountModel data)
 	{
-		return new ResponseEntity<>(accountService.setAccount(data),HttpStatus.OK);
+		System.out.println(data.getAccountType()+" "+data.getBalance()+" "+data.getBranch());
+		return accountService.setAccount(data);
 	}
 	
 
