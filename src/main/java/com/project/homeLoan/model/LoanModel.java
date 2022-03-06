@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +35,7 @@ public class LoanModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="loanId", nullable = false)
+	@Column(name="loanId")
 	private long loanId;
 	
 	@Column(name="balance", nullable = false)
@@ -45,10 +46,7 @@ public class LoanModel {
 	
 	@Column(name="tenure", nullable = false)
 	private long tenure;
-	
-	@Column(name="interest", nullable = false)
-	private long interest;
-	
+
 	@Column(name="salary", nullable = false)
 	private long salary;
 	
@@ -72,24 +70,7 @@ public class LoanModel {
 		this.document = document;
 	}
 
-	
-	private final HashMap<String, MultipartFile> details= new HashMap<String,MultipartFile>();
-	
-	 @JsonAnySetter
-	 public void addDetail(String key, MultipartFile value) {
-	    this.details.put(key, value);
-	 }
-	 
-	 public HashMap<String, MultipartFile> getDetails() { return this.details; }
 
-
-
-	@ManyToOne
-	@JoinColumn(name="account",referencedColumnName = "accountNo")
-	private AccountModel account;
-	
-	
-	
 	public long getLoanId() {
 		return loanId;
 	}
@@ -137,19 +118,6 @@ public class LoanModel {
 	}
 
 
-
-	public long getInterest() {
-		return interest;
-	}
-
-
-
-	public void setInterest(long interest) {
-		this.interest = interest;
-	}
-
-
-
 	public long getSalary() {
 		return salary;
 	}
@@ -185,6 +153,11 @@ public class LoanModel {
 	}
 
 
+	@ManyToOne()
+	@JoinColumn(name="account_no", referencedColumnName = "accountNo")
+	private AccountModel account;
+	
+	
 
 	@JsonBackReference
 	public AccountModel getAccount() {

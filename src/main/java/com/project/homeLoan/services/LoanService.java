@@ -21,11 +21,9 @@ public class LoanService {
 	@Autowired
 	private LoanDaoInterface loanDao;
 
-	public String processLoanDetails(LoanModel data) {
+	public void processLoanDetails(LoanModel data) {
 		
 		loanDao.save(data);
-		return "ghe re ba return";
-		
 		
 	}
 
@@ -50,9 +48,9 @@ public class LoanService {
 		return pathDb;
 	}
 
-	public String docHandler(MultipartFile doc) {
+	public String docHandler(MultipartFile doc , long id) {
 		
-        String folder ="C:\\Users\\sumit\\Desktop\\ubs\\";
+        String folder ="C:\\Users\\swara\\Desktop\\Home Loan\\Documents\\";
 		
 		byte[] bytes = null;
 		try {
@@ -69,8 +67,8 @@ public class LoanService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		loanDao.updateDoc(pathDb, 1);
+		System.out.println(pathDb);
+		loanDao.updateDoc(pathDb, id);
 		return pathDb;
 	}
 
