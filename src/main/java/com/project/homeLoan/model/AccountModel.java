@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -21,6 +22,50 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "Account")
 public class AccountModel {
 
+	
+
+	@Id
+	@GenericGenerator(name="sequence_generator", strategy="com.project.homeLoan.generator.AccountNumberGenerator")
+	@GeneratedValue(generator = "sequence_generator")
+	@Column(name="accountNo")
+	private long accountNo;
+	
+
+	public long getAccountNo() {
+		return accountNo;
+	}
+
+	public void setAccountNo(long accountNo) {
+		this.accountNo = accountNo;
+	}
+
+	@Column(name = "branch")
+	private String branch;
+	
+	@Column(name = "accountType")
+	private String accountType;
+	
+	@Column(name = "balance")
+	private long balance;
+	
+	@Column(name = "ifsc")
+	private String ifsc;
+	
+	
+	@OneToOne
+	@JoinColumn(name="user_id")
+	private UserModel user;
+
+	public void setUser(UserModel user) {
+		this.user = user;
+	}
+
+	@JsonBackReference
+	public UserModel getUser() {
+		return user;
+	}
+	
+	
 	public String getBranch() {
 		return branch;
 	}
@@ -53,42 +98,11 @@ public class AccountModel {
 		this.ifsc = ifsc;
 	}
 
-	@Id
-	@GenericGenerator(name="sequence_generator", strategy="com.project.homeLoan.generator.AccountNumberGenerator")
-	@GeneratedValue(generator = "sequence_generator")
-	@Column(name="accountNo", updatable = false, nullable = false)
-	private long accountNo;
-	
-	@Column(name = "branch")
-	private String branch;
-	
-	@Column(name = "accountType")
-	private String accountType;
-	
-	@Column(name = "balance")
-	private long balance;
-	
-	@Column(name = "ifsc")
-	private String ifsc;
-	
-	
-	@OneToOne
-	@JoinColumn(name="user_id")
-	private UserModel user;
-
-	public void setUser(UserModel user) {
-		this.user = user;
-	}
-
-	@JsonBackReference
-	public UserModel getUser() {
-		return user;
-	}
 	//in mappedBy use object name created in referncing table(loanModel.java ) 
-	@OneToMany(mappedBy = "account")
+	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
 	private List<LoanModel> loans;
 
-	@JsonManagedReference
+	
 	public List<LoanModel> getLoans() {
 		return loans;
 	}
