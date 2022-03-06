@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,11 +13,19 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 
 
 @Entity
-@Table(name = "User")
+@Table(name = "Users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserModel {
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,33 +43,9 @@ public class UserModel {
 	@Column(name = "role")
 	private boolean role;
 	
-	public String getUserName() {
-		return userName;
-	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
- 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public boolean isRole() {
-		return role;
-	}
-
-	public void setRole(boolean role) {
-		this.role = role;
-	}
-
-	@OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user",fetch = FetchType.LAZY)
 	private AccountModel account;
-	
 
 	@OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
 	private KycModel kyc;

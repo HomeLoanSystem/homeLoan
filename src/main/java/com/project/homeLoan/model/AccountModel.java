@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -14,41 +15,17 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 @Entity
-@Table(name = "Account")
+@Table(name = "account")
+@AllArgsConstructor
+@NoArgsConstructor
 public class AccountModel {
 
-	public String getBranch() {
-		return branch;
-	}
-
-	public void setBranch(String branch) {
-		this.branch = branch;
-	}
-
-	public String getAccountType() {
-		return accountType;
-	}
-
-	public void setAccountType(String accountType) {
-		this.accountType = accountType;
-	}
-
-	public long getBalance() {
-		return balance;
-	}
-
-	public void setBalance(long balance) {
-		this.balance = balance;
-	}
-
-	public String getIfsc() {
-		return ifsc;
-	}
-
-	public void setIfsc(String ifsc) {
-		this.ifsc = ifsc;
-	}
 
 	@Id
 	@GenericGenerator(name="sequence_generator", strategy="com.project.homeLoan.generator.AccountNumberGenerator")
@@ -68,8 +45,18 @@ public class AccountModel {
 	@Column(name = "ifsc")
 	private String ifsc;
 	
+//	@JsonBackReference
+//	public UserModel getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(UserModel user) {
+//		this.user = user;
+//	}
+
+
 	@OneToOne
-	@JoinColumn(name="userId",referencedColumnName ="id")
+	@JoinColumn(name="id",referencedColumnName ="id")
 	private UserModel user;
 	
 	//in mappedBy use object name created in referncing table(loanModel.java ) 
