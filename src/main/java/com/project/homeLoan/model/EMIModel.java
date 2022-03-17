@@ -1,5 +1,7 @@
 package com.project.homeLoan.model;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,10 +27,10 @@ public class EMIModel {
 	private long amount;
 	
 	@Column(name="emi_date", nullable = false)
-	private String emi_date;
+	private Date emi_date;
 	
 	@Column(name="next_emi_date", nullable = false)
-	private String next_emi_date;
+	private Date next_emi_date;
 	
 	@Column(name="remaining_amount")
 	private long remaining_amount;
@@ -68,25 +70,25 @@ public class EMIModel {
 
 
 
-	public String getEmi_date() {
+	public Date getEmi_date() {
 		return emi_date;
 	}
 
 
 
-	public void setEmi_date(String emi_date) {
+	public void setEmi_date(Date emi_date) {
 		this.emi_date = emi_date;
 	}
 
 
 
-	public String getNext_emi_date() {
+	public Date getNext_emi_date() {
 		return next_emi_date;
 	}
 
 
 
-	public void setNext_emi_date(String next_emi_date) {
+	public void setNext_emi_date(Date next_emi_date) {
 		this.next_emi_date = next_emi_date;
 	}
 

@@ -1,6 +1,7 @@
 package com.project.homeLoan.model;
 
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,9 +29,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name = "Loan_details")
 public class LoanModel {
-	private enum Status {
+	public enum Status {
 		PENDING,
-		CLOSED
+		SANCTIONED,
+		REJECTED,
+		CLOSED,	
 	}
 	
 	@Id
@@ -50,8 +53,8 @@ public class LoanModel {
 	@Column(name="salary", nullable = false)
 	private long salary;
 	
-	@Column(name="loan_sanction_date", nullable = false)
-	private String loan_sanction_date;
+	@Column(name="loan_sanction_date")
+	private Date loan_sanction_date;
 	
 	@Column(name="document",nullable=true)
 	private String document;
@@ -130,13 +133,13 @@ public class LoanModel {
 
 
 
-	public String getLoan_sanction_date() {
+	public Date getLoan_sanction_date() {
 		return loan_sanction_date;
 	}
 
 
 
-	public void setLoan_sanction_date(String loan_sanction_date) {
+	public void setLoan_sanction_date(Date loan_sanction_date) {
 		this.loan_sanction_date = loan_sanction_date;
 	}
 
@@ -153,12 +156,12 @@ public class LoanModel {
 	}
 
 
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name="account_no", referencedColumnName = "accountNo")
 	private AccountModel account;
 	
 	
-
+   
 	@JsonBackReference
 	public AccountModel getAccount() {
 		return account;
