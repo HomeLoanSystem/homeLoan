@@ -2,6 +2,8 @@ package com.project.homeLoan.controller;
 
 import java.util.List;
 
+import javax.sound.midi.Soundbank;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +54,7 @@ public class LoanController {
 	public ResponseEntity<Object> loanStatus(@PathVariable long id)
 	{
 		Status st=loanService.getLoanStatus(id);
-		if(st.equals(Status.PENDING))
+		if(st.equals(Status.PENDING) && !loanService.isDocSubmitted(id))
 		{
 			return ResponseHandler.generateResponse("Please submit your property Documents for Verification! Pending!!",HttpStatus.OK ,st);
 		}
@@ -61,8 +63,8 @@ public class LoanController {
 			return ResponseHandler.generateResponse("Your Loan Application Got rejected! Please reveiw banks terms and conditions.", HttpStatus.OK, st);
 		}
 		else
-		{
-			return ResponseHandler.generateResponse("Your loan Application is Approved, congrats! Please find the Emi details below !",HttpStatus.OK ,loanService.evaluateEmi(id));
+		{	
+			return ResponseHandler.generateResponse("Your loan Application is Approved, congrats! Please find the Emi details below !",HttpStatus.OK ,loanService.sanctionLoan(id));
 		}
 		
 	}

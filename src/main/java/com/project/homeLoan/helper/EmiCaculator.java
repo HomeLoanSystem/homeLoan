@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 
 public class EmiCaculator {
 	
-	private static double rate = 7;
+	private static final double rate = 7;
 	private static DecimalFormat df=null;
 	
 	public static DecimalFormat getInstance()
@@ -21,19 +21,19 @@ public class EmiCaculator {
 	{
 		
 	      
-        rate=rate/12;  // Per month rate
+        double temp=rate/12;  // Per month rate
         System.out.println("rate is "+rate);
-        rate=rate/100;
+        temp=temp/100;
         DecimalFormat f=getInstance();
-        rate=Double.valueOf(f.format(rate)); 
-        System.out.println("rate is "+rate);
+        temp=Double.valueOf(f.format(temp)); 
+        System.out.println("rate is "+temp);
  
         tenure=tenure*12;    // Converting tenure into months
         System.out.println("tenure  is "+tenure);
             
-        double n = Math.pow(1+rate, tenure);
-        double d = Math.pow(1+rate, tenure);
-        double emi_n= (principal*rate*n);
+        double n = Math.pow(1+temp, tenure);
+        double d = Math.pow(1+temp, tenure);
+        double emi_n= (principal*temp*n);
         System.out.println("emi _n is "+ emi_n);
         double res= emi_n/(d-1);
         res=Double.valueOf(f.format(res));

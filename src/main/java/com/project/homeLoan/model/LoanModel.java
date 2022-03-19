@@ -3,6 +3,7 @@ package com.project.homeLoan.model;
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -16,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -175,17 +177,17 @@ public class LoanModel {
 
 
     @JsonManagedReference
-	public EMIModel getEmi() {
-		return emi;
+	public List<EMIModel> getEmi() {
+		return emiList;
 	}
 
 
 
-	public void setEmi(EMIModel emi) {
-		this.emi = emi;
+	public void setEmi(List<EMIModel> emi) {
+		this.emiList = emi;
 	}
 
 
-	@OneToOne(mappedBy = "loan")
-	private EMIModel emi;
+	@OneToMany(mappedBy = "loan")
+	private List<EMIModel> emiList;
 }

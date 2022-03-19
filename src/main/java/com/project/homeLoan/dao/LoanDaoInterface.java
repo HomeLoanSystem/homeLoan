@@ -26,7 +26,7 @@ public interface LoanDaoInterface extends JpaRepository<LoanModel, Long>{
 	@Transactional
 	@Modifying
 	@Query(value = "UPDATE loan_details SET status=? WHERE  loan_id= ?",nativeQuery = true)
-	public void sanctionLoan(int st,long id);
+	public void updateLoanStatus(int st,long id);
 
 	@Transactional
 	@Query(value = "SELECT * from loan_details where loan_id=?",nativeQuery = true)
@@ -36,6 +36,10 @@ public interface LoanDaoInterface extends JpaRepository<LoanModel, Long>{
 	@Modifying
 	@Query(value= "UPDATE loan_details SET loan_sanction_date=? WHERE loan_id=?",nativeQuery = true)
 	public void updateDate(Date d, long id);
+
+	@Transactional
+	@Query(value = "Select document from loan_details WHERE loan_id=?",nativeQuery = true)
+	public String checkDocStatus(long id);
 	
 
 }

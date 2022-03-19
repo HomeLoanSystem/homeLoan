@@ -17,6 +17,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.homeLoan.common.DateFormater;
 import com.project.homeLoan.dao.KycDaoInterface;
 import com.project.homeLoan.dao.LoanDaoInterface;
 import com.project.homeLoan.helper.EmiCaculator;
@@ -31,13 +32,11 @@ public class LoanService {
 	@Autowired
 	private LoanDaoInterface loanDao;
 	
-	@Autowired
-	private KycDaoInterface kycDao;
 
-	
-	
 	@Autowired
 	private EmiService emiService;
+	
+	
 	
 	public void processLoanDetails(LoanModel data) {
 		data.setStatus(Status.PENDING);
@@ -82,11 +81,7 @@ public class LoanService {
 		try {
 			Files.write(path, bytes);
 			System.out.println(pathDb);
-			loanDao.updateDoc(pathDb, id);
-			//businees logic ignore for doc verification
-			loanDao.sanctionLoan(1, id);
-			
-			
+			loanDao.updateDoc(pathDb, id);		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -98,23 +93,27 @@ public class LoanService {
 		return loanDao.loanStatus(id);
 	}
 
-	public Object evaluateEmi(long id) {
-		LoanModel l=loanDao.getEmiData(id);
-		AccountModel account=l.getAccount();
-		UserModel u= account.getUser();
-		Long user_id =u.getId();
-		String email = kycDao.getEmail(user_id);
-		System.out.println(email);
-		double emi = EmiCaculator.emiCalculator(l.getBalance(), l.getTenure());
-		double balanceOustanding = (l.getBalance()* l.getTenure())/(12);
-		balanceOustanding=balanceOustanding/100;
-		double interest= emi-balanceOustanding;
+	public String sanctionLoan(long id)
+	{
 		Date d = new Date();
+		try {
 		loanDao.updateDate(d,id);
-		emiService.processEmiDetails(l.getBalance(),emi,l.getTenure(),email,interest,l.getLoan_sanction_date(),l);
-		
-		return Arrays.asList(emi,emi-balanceOustanding);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		loanDao.updateLoanStatus(1, id);
+		emiService.evaluateEmi(id);
+		return "Your loan request has been approved on Date "+ DateFormater.getInstance().format(d) + " Emi details will be shared soon!";
 	}
+
+	public boolean isDocSubmitted(long id) {
+		
+		String str= loanDao.checkDocStatus(id);
+		return str==null? false : true;
+	}
+	
+	
 
 	
 

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -38,9 +39,23 @@ public class EMIModel {
 	@Column(name="interest_amount", nullable = false)
 	private long interest_amount;
 	
+	@Column(name="emi_paid_date")
+	private Date emi_paid_date;
 	
 	
-	@OneToOne
+	public Date getEmi_paid_date() {
+		return emi_paid_date;
+	}
+
+
+
+	public void setEmi_paid_date(Date emi_paid_date) {
+		this.emi_paid_date = emi_paid_date;
+	}
+
+
+
+	@ManyToOne
 	@JoinColumn(name="loanId",referencedColumnName = "loanId")
 	private LoanModel loan;
 

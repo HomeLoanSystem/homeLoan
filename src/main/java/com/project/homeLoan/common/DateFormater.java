@@ -9,7 +9,7 @@ public class DateFormater {
 	{
 		if(df==null)
 		{
-			df= new SimpleDateFormat("dd/MM/YYYY");
+			df= new SimpleDateFormat("yyyy-MM-dd");
 		}
 		return df;
 	}
