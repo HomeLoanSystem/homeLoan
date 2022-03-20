@@ -20,6 +20,7 @@ import com.project.homeLoan.helper.EmiCaculator;
 import com.project.homeLoan.model.LoanModel;
 import com.project.homeLoan.model.LoanModel.Status;
 import com.project.homeLoan.model.UserModel;
+import com.project.homeLoan.services.EmiService;
 import com.project.homeLoan.services.LoanService;
 
 @RestController
@@ -28,6 +29,8 @@ public class LoanController {
 	@Autowired
 	private LoanService loanService;
 	
+	@Autowired
+	private EmiService emiService;
 	
 	
 	
@@ -62,9 +65,13 @@ public class LoanController {
 		{
 			return ResponseHandler.generateResponse("Your Loan Application Got rejected! Please reveiw banks terms and conditions.", HttpStatus.OK, st);
 		}
-		else
+		else if(st.equals(Status.PENDING))
 		{	
 			return ResponseHandler.generateResponse("Your loan Application is Approved, congrats! Please find the Emi details below !",HttpStatus.OK ,loanService.sanctionLoan(id));
+		}
+		else
+		{
+			return ResponseHandler.generateResponse("Your EMI Details are as follows", HttpStatus.OK, emiService.evaluateEmi(id));
 		}
 		
 	}

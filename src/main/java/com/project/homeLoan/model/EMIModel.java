@@ -24,7 +24,7 @@ public class EMIModel {
 	@Column(name="emiID", nullable = false)
 	private long emiID;
 	
-	@Column(name="amount", nullable = false)
+	@Column(name="emi_amount", nullable = false)
 	private long amount;
 	
 	@Column(name="emi_date", nullable = false)
