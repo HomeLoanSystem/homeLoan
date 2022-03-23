@@ -1,6 +1,6 @@
-##Home Loan System
+Home Loan System
 
-#Swagger
+Swagger
 For UI\
 http://localhost:{PORT_NUMBER}/swagger-ui.html \
 For POSTMAN\
